@@ -4,13 +4,17 @@ import "./css/reset.css";
 import "./css/style.css";
 import {ControlPanel} from "./ControlPanel";
 import {DisplayPanel} from "./DisplayPanel";
+import {TasksProvider} from "./TasksProvider";
 
 export const ToDoList = () => {
     return (
         <>
             <div className="container">
                 <ControlPanel/>
-                <DisplayPanel/>
+
+                <TasksProvider>
+                    <DisplayPanel/>
+                </TasksProvider>
             </div>
         </>
     );
