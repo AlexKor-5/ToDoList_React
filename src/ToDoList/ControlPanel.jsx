@@ -1,11 +1,18 @@
-import React from "react";
+import React, {useState} from "react";
+import {TasksProvider} from "./TasksProvider";
+import {useTasks} from "./TasksProvider";
+
 
 export const ControlPanel = () => {
+    const [inputText, setInputText] = useState("");
+
     return (
         <div className="control-panel">
             <Title/>
-            <Input/>
-            <Buttons/>
+            <Input inputText={inputText} inputChanger={setInputText}/>
+            <TasksProvider>
+                <Buttons inputText={inputText}/>
+            </TasksProvider>
         </div>
     );
 }
@@ -15,22 +22,30 @@ const Title = () =>
         <h1>Great To Do List</h1>
     </div>
 
-const Input = () =>
+const Input = ({inputText = "", inputChanger = f => f}) =>
     <div className="control-panel__input">
-        <input type="text" placeholder="Enter your task ..."/>
+        <input type="text" placeholder="Enter your task ..." defaultValue={inputText}
+               onChange={event => inputChanger(event.target.value)}/>
     </div>
 
-const Buttons = () =>
-    <div className="control-panel__buttons">
-        <form action="#" method="post" className="form">
-            <AddButton/>
-            <SortButton/>
-            <ResetButton/>
-        </form>
-    </div>
+const Buttons = ({inputText}) => {
+    const {addTask} = useTasks();
 
-const AddButton = () =>
-    <button className="form__buttons form__buttons-add">
+    return (
+        <div className="control-panel__buttons">
+            <form action="#" method="post" className="form"
+                  onSubmit={e => e.preventDefault()}>
+
+                <AddButton addAction={addTask} inputText={inputText}/>
+                <SortButton/>
+                <ResetButton/>
+            </form>
+        </div>
+    )
+}
+
+const AddButton = ({addAction = f => f, inputText = "default text"}) =>
+    <button className="form__buttons form__buttons-add" onClick={() => addAction(inputText)}>
         <svg xmlns="http://www.w3.org/2000/svg" className="svg-wrapper" viewBox="0 0 512 512">
             <path className="svg-path"
                   d="M256 0C114.84 0 0 114.84 0 256s114.84 256 256 256 256-114.84 256-256S397.16 0 256 0zm0 475.429c-120.997 0-219.429-98.432-219.429-219.429S135.003 36.571 256 36.571 475.429 135.003 475.429 256 376.997 475.429 256 475.429z"/>

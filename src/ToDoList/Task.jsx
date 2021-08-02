@@ -1,11 +1,11 @@
 import React from "react";
 
-export const Task = () => {
+export const Task = ({text, orderNumber}) => {
     return (
         <div className="task">
             <div className="display-panel__wrapper">
-                <TaskNumber/>
-                <TaskText/>
+                <TaskNumber number={orderNumber}/>
+                <TaskText txt={text}/>
             </div>
             <div className="display-panel__buttons">
                 <EditButton/>
@@ -16,14 +16,14 @@ export const Task = () => {
     );
 }
 
-const TaskNumber = () =>
+const TaskNumber = (props) =>
     <div className="display-panel__number">
-        <span className="display-panel__circle">1</span>
+        <span className="display-panel__circle">{props.number}</span>
     </div>
 
-const TaskText = () =>
+const TaskText = (props) =>
     <div className="display-panel__text">
-        <p>Clean my home</p>
+        <p>{props.txt}</p>
     </div>
 
 const EditButton = () =>

@@ -1,10 +1,12 @@
 import React from "react";
+
 import {Task} from "./Task";
 import {useTasks} from "./TasksProvider";
 
 export const DisplayPanel = () => {
-    const {tasks, setTasks} = useTasks([]);
+    const {tasks} = useTasks([]);
     console.log(tasks);
+
     return (
         <div className="display-panel">
             <ListOfTasks
@@ -15,19 +17,12 @@ export const DisplayPanel = () => {
     );
 }
 
-const ListOfTasks = ({data = [], emptyRender}) => {
-    return (
-        <h1>{data.map((task, i) => (
-            <h1>w</h1>
-        ))}</h1>
+const ListOfTasks = ({data = [], emptyRender = <p>Nothing</p>}) => {
+    return !data.length ? (emptyRender) : (
+        <h1>
+            {data.map((task, i) => (
+                <Task  {...task} key={i} orderNumber={i + 1}/>
+            ))}
+        </h1>
     )
 }
-
-// !data.length ? (emptyRender) : (
-//     {
-//         data.map((task, i) => (
-//             // <Task  {...task} key={i}/>
-//             console.log(data[i])
-//         ));
-//     }
-// );
