@@ -19,10 +19,10 @@ export const DisplayPanel = () => {
 
 const ListOfTasks = ({data = [], emptyRender = <p>Nothing</p>}) => {
     return !data.length ? (emptyRender) : (
-        <h1>
+        <>
             {data.map((task, i) => (
                 <Task  {...task} key={i} orderNumber={i + 1}/>
             ))}
-        </h1>
+        </>
     )
 }
