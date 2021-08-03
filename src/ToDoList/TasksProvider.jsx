@@ -1,6 +1,7 @@
 import React, {createContext, useState, useContext, useEffect} from "react";
 // import tasksData from "./tasks-data.json";
 import {v4 as uuidv4} from 'uuid';
+import PropTypes from "prop-types";
 
 const TaskContext = createContext([]);
 
@@ -45,4 +46,8 @@ export const TasksProvider = ({children}) => {
             {children}
         </TaskContext.Provider>
     );
+}
+
+TasksProvider.propTypes = {
+    children: PropTypes.element
 }

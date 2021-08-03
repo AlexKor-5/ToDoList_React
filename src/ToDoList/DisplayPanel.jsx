@@ -2,6 +2,7 @@ import React from "react";
 
 import {Task} from "./Task";
 import {useTasks} from "./TasksProvider";
+import PropTypes from "prop-types";
 
 export const DisplayPanel = () => {
     const {tasks} = useTasks([]);
@@ -24,4 +25,9 @@ const ListOfTasks = ({data = [], emptyRender = <p>Nothing</p>}) => {
             ))}
         </>
     )
+}
+
+ListOfTasks.propTypes = {
+    data: PropTypes.array,
+    emptyRender: PropTypes.element
 }

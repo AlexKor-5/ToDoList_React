@@ -1,5 +1,6 @@
 import React from "react";
 import {useTasks} from "./TasksProvider";
+import PropTypes from "prop-types";
 
 export const Task = ({text = "", orderNumber = 0, id = ""}) => {
     const {doneTask} = useTasks();
@@ -19,15 +20,29 @@ export const Task = ({text = "", orderNumber = 0, id = ""}) => {
     );
 }
 
+Task.propTypes = {
+    text: PropTypes.string,
+    id: PropTypes.string,
+    orderNumber: PropTypes.number
+}
+
 const TaskNumber = (props) =>
     <div className="display-panel__number">
         <span className="display-panel__circle">{props.number}</span>
     </div>
 
+TaskNumber.propTypes = {
+    number: PropTypes.number
+}
+
 const TaskText = (props) =>
     <div className="display-panel__text">
         <p>{props.txt}</p>
     </div>
+
+TaskText.propTypes = {
+    txt: PropTypes.string
+}
 
 const EditButton = () => {
     return (
@@ -49,6 +64,11 @@ const CheckButton = ({doneAction = f => f, id = ""}) =>
         </svg>
     </button>
 
+CheckButton.propTypes = {
+    doneAction: PropTypes.func,
+    id: PropTypes.string
+}
+
 const CrossButton = ({crossAction = f => f, id = ""}) =>
     <button className="display-panel__button" onClick={() => crossAction(id)}>
         <svg viewBox="0 0 512 512" className="display-panel__svg" xmlns="http://www.w3.org/2000/svg">
@@ -60,3 +80,8 @@ const CrossButton = ({crossAction = f => f, id = ""}) =>
                   d="M164.57 365.715c-4.68 0-9.355-1.785-12.925-5.36-7.145-7.14-7.145-18.714 0-25.855L334.5 151.645c7.145-7.145 18.715-7.145 25.855 0 7.141 7.14 7.145 18.714 0 25.855L177.5 360.355a18.216 18.216 0 01-12.93 5.36zm0 0"/>
         </svg>
     </button>
+
+CrossButton.propTypes = {
+    crossAction: PropTypes.func,
+    id: PropTypes.string
+}

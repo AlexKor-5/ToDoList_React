@@ -122,6 +122,15 @@ body {
     margin: 0 0 0.9375em 0;
 }
 
+textarea{
+    display: block;
+    width: 100%;
+    background: transparent;
+    /*border: none;*/
+    outline: none;
+    color: #FFFFFF;
+}
+
 .task {
     display: flex;
     flex-flow: row wrap;
@@ -149,7 +158,7 @@ body {
     margin-right: 35px;
 }
 
-.display-panel__text p {
+.display-panel__text{
     font-size: 16px;
     line-height: 21px;
     max-width: 620px;
@@ -173,4 +182,5 @@ body {
 .display-panel__path {
     fill: #FFFFFF;
 }
+
 

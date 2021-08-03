@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import {useTasks} from "./TasksProvider";
+import PropTypes from 'prop-types';
 
 
 export const ControlPanel = () => {
@@ -25,6 +26,11 @@ const Input = ({inputText = "", inputChanger = f => f}) =>
                onChange={event => inputChanger(event.target.value)}/>
     </div>
 
+Input.propTypes = {
+    inputText: PropTypes.string,
+    inputChanger: PropTypes.func
+}
+
 const Buttons = ({inputText = "default text", inputAction = f => f}) => {
     const {addTask, resetTasks, sortTasks} = useTasks();
 
@@ -39,6 +45,11 @@ const Buttons = ({inputText = "default text", inputAction = f => f}) => {
             </form>
         </div>
     )
+}
+
+Buttons.propTypes = {
+    inputText: PropTypes.string,
+    inputAction: PropTypes.func
 }
 
 const AddButton = ({addAction = f => f, inputText = "default text", inputAction = f => f}) => {
@@ -62,6 +73,12 @@ const AddButton = ({addAction = f => f, inputText = "default text", inputAction 
     );
 }
 
+AddButton.propTypes = {
+    inputText: PropTypes.string,
+    addAction: PropTypes.func,
+    inputAction: PropTypes.func
+}
+
 const SortButton = ({sortAction = f => f}) =>
     <button className="form__buttons form__buttons-sort" onClick={() => sortAction()}>
         <svg viewBox="0 0 32 32" className="svg-wrapper" xmlns="http://www.w3.org/2000/svg">
@@ -72,6 +89,10 @@ const SortButton = ({sortAction = f => f}) =>
         </svg>
         <span className="form__buttons-text">Sort</span>
     </button>
+
+SortButton.propTypes = {
+    sortAction: PropTypes.func
+}
 
 const ResetButton = ({resetAction = f => f}) =>
     <button className="form__buttons form__buttons-reset" onClick={() => resetAction()}>
@@ -85,3 +106,7 @@ const ResetButton = ({resetAction = f => f}) =>
         </svg>
         <span className="form__buttons-text">Reset</span>
     </button>
+
+ResetButton.propTypes = {
+    resetAction: PropTypes.func
+}
