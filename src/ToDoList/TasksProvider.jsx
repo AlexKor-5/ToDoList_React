@@ -1,24 +1,23 @@
 import React, {createContext, useState, useContext, useEffect} from "react";
-import tasksData from "./tasks-data.json";
+// import tasksData from "./tasks-data.json";
 import {v4 as uuidv4} from 'uuid';
 
 const TaskContext = createContext([]);
 
 export const useTasks = () => useContext(TaskContext);
-// const key = "TODOLIST";
+const key = "TODOLIST";
 
-// const saveJSON = (key, data) =>
-//     localStorage.setItem(key, JSON.stringify(data));
-//
-// const loadJSON = key =>
-//     key && JSON.parse(localStorage.getItem(key));
+const saveJSON = (key, data) =>
+    localStorage.setItem(key, JSON.stringify(data));
+
+const loadJSON = key =>
+    key && JSON.parse(localStorage.getItem(key));
 
 export const TasksProvider = ({children}) => {
-    const [tasks, setTasks] = useState(tasksData);
+    const [tasks, setTasks] = useState(loadJSON(key) || []);
 
     useEffect(() => {
-        console.log("tasks have just been changed");
-        console.log(tasks);
+        saveJSON(key, tasks);
     }, [tasks]);
 
 
