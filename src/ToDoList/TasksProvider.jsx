@@ -5,6 +5,13 @@ import {v4 as uuidv4} from 'uuid';
 const TaskContext = createContext([]);
 
 export const useTasks = () => useContext(TaskContext);
+// const key = "TODOLIST";
+
+// const saveJSON = (key, data) =>
+//     localStorage.setItem(key, JSON.stringify(data));
+//
+// const loadJSON = key =>
+//     key && JSON.parse(localStorage.getItem(key));
 
 export const TasksProvider = ({children}) => {
     const [tasks, setTasks] = useState(tasksData);
@@ -24,9 +31,18 @@ export const TasksProvider = ({children}) => {
             },
         ]);
 
+    const resetTasks = () =>
+        setTasks([]);
+
+    const sortTasks = () =>
+        setTasks([...tasks].reverse());
+
+    const doneTask = (id) =>
+        setTasks(tasks.filter(item => item.id !== id));
+
 
     return (
-        <TaskContext.Provider value={{tasks, addTask}}>
+        <TaskContext.Provider value={{tasks, addTask, resetTasks, sortTasks, doneTask}}>
             {children}
         </TaskContext.Provider>
     );

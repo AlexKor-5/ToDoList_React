@@ -10,13 +10,12 @@ import {TasksProvider} from "./TasksProvider";
 export const ToDoList = () => {
     return (
         <>
-            <div className="container">
-                <ControlPanel/>
-
-                <TasksProvider>
+            <TasksProvider>
+                <div className="container">
+                    <ControlPanel/>
                     <DisplayPanel/>
-                </TasksProvider>
-            </div>
+                </div>
+            </TasksProvider>
         </>
     );
 }

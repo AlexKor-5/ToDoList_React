@@ -5,7 +5,6 @@ import {useTasks} from "./TasksProvider";
 
 export const DisplayPanel = () => {
     const {tasks} = useTasks([]);
-    console.log(tasks);
 
     return (
         <div className="display-panel">
