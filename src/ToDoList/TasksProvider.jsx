@@ -4,10 +4,9 @@ import {v4 as uuidv4} from 'uuid';
 import PropTypes from "prop-types";
 
 const TaskContext = createContext([]);
-
 export const useTasks = () => useContext(TaskContext);
-const key = "TODOLIST";
 
+const key = "TODOLIST";
 const saveJSON = (key, data) =>
     localStorage.setItem(key, JSON.stringify(data));
 
@@ -18,6 +17,7 @@ export const TasksProvider = ({children}) => {
     const [tasks, setTasks] = useState(loadJSON(key) || []);
 
     useEffect(() => {
+        console.log(tasks);
         saveJSON(key, tasks);
     }, [tasks]);
 
@@ -39,7 +39,6 @@ export const TasksProvider = ({children}) => {
 
     const doneTask = (id) =>
         setTasks(tasks.filter(item => item.id !== id));
-
 
     return (
         <TaskContext.Provider value={{tasks, addTask, resetTasks, sortTasks, doneTask}}>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useRef} from "react";
 import {useTasks} from "./TasksProvider";
 import PropTypes from "prop-types";
 
@@ -35,10 +35,25 @@ TaskNumber.propTypes = {
     number: PropTypes.number
 }
 
-const TaskText = (props) =>
-    <div className="display-panel__text">
-        <p>{props.txt}</p>
-    </div>
+const TaskText = (props) => {
+    const refTextArea = useRef(null);
+    // console.log(refTextArea.current);
+
+    const fixTextareaSize = textarea => {
+        if (textarea === null) return
+        textarea.style.height = 'auto'
+        textarea.style.height = textarea.scrollHeight + 2 + "px"
+    }
+
+    fixTextareaSize(refTextArea.current);
+    return (
+        <div className="display-panel__text">
+            {/*<p>{props.txt}</p>*/}
+            <textarea ref={refTextArea} value={props.txt} readOnly={"readOnly"}/>
+        </div>
+    )
+}
+
 
 TaskText.propTypes = {
     txt: PropTypes.string
@@ -57,7 +72,8 @@ const EditButton = () => {
 }
 
 const CheckButton = ({doneAction = f => f, id = ""}) =>
-    <button className="display-panel__button" onClick={() => doneAction(id)}>
+    <button className="display-panel__button"
+            onClick={() => [doneAction(id), console.log("deleted elem has id: " + id)]}>
         <svg viewBox="0 0 512 512" className="display-panel__svg" xmlns="http://www.w3.org/2000/svg">
             <path className="display-panel__path"
                   d="M369.164 174.77c7.813 7.812 7.813 20.476 0 28.285L234.992 337.23c-7.812 7.81-20.472 7.81-28.285 0l-63.871-63.875c-7.813-7.808-7.813-20.472 0-28.28 7.809-7.813 20.473-7.813 28.281 0l49.73 49.73L340.88 174.77c7.812-7.81 20.476-7.81 28.285 0zM512 256c0 141.504-114.516 256-256 256C114.496 512 0 397.484 0 256 0 114.496 114.516 0 256 0c141.504 0 256 114.516 256 256zm-40 0c0-119.395-96.621-216-216-216-119.395 0-216 96.621-216 216 0 119.395 96.621 216 216 216 119.395 0 216-96.621 216-216zm0 0"/>
