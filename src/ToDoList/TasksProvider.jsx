@@ -40,6 +40,7 @@ export const TasksProvider = ({children}) => {
     const doneTask = (id) =>
         setTasks(tasks.filter(item => item.id !== id));
 
+
     return (
         <TaskContext.Provider value={{tasks, addTask, resetTasks, sortTasks, doneTask}}>
             {children}

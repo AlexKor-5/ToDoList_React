@@ -127,9 +127,10 @@ textarea{
     width: 100%;
     height: auto;
     background: transparent;
-    /*border: none;*/
+    border: none;
     outline: none;
     color: #FFFFFF;
+    font-family: 'Varela', sans-serif;
     resize: none;
     overflow: hidden;
 }
@@ -151,7 +152,7 @@ textarea{
     justify-content: flex-start;
     align-items: center;
     flex-grow: 1;
-    border: 1px solid indigo;
+    /*border: 1px solid indigo;*/
 }
 
 .display-panel__circle {
@@ -167,7 +168,7 @@ textarea{
     font-size: 16px;
     line-height: 21px;
     max-width: 620px;
-    border:2px solid deeppink;
+    /*border:2px solid deeppink;*/
     flex-grow: 1;
 }
 

@@ -1,4 +1,4 @@
-import React, {useRef} from "react";
+import React, {useEffect, useRef} from "react";
 import {useTasks} from "./TasksProvider";
 import PropTypes from "prop-types";
 
@@ -35,29 +35,32 @@ TaskNumber.propTypes = {
     number: PropTypes.number
 }
 
+const fixTextareaSize = textarea => {
+    if (textarea === null) return
+    textarea.style.height = 'auto'
+    textarea.style.height = textarea.scrollHeight + 2 + "px"
+}
+
 const TaskText = (props) => {
     const refTextArea = useRef(null);
-    // console.log(refTextArea.current);
+    const {tasks} = useTasks();
 
-    const fixTextareaSize = textarea => {
-        if (textarea === null) return
-        textarea.style.height = 'auto'
-        textarea.style.height = textarea.scrollHeight + 2 + "px"
-    }
+    useEffect(() => {
+        fixTextareaSize(refTextArea.current);
+    }, [tasks]);
 
-    fixTextareaSize(refTextArea.current);
     return (
         <div className="display-panel__text">
-            {/*<p>{props.txt}</p>*/}
-            <textarea ref={refTextArea} value={props.txt} readOnly={"readOnly"}/>
+            <textarea ref={refTextArea} defaultValue={props.txt}/>
         </div>
     )
 }
 
 
-TaskText.propTypes = {
-    txt: PropTypes.string
-}
+TaskText.propTypes =
+    {
+        txt: PropTypes.string
+    }
 
 const EditButton = () => {
     return (
@@ -71,7 +74,11 @@ const EditButton = () => {
     );
 }
 
-const CheckButton = ({doneAction = f => f, id = ""}) =>
+const CheckButton = (
+    {
+        doneAction = f => f, id = ""
+    }
+) =>
     <button className="display-panel__button"
             onClick={() => [doneAction(id), console.log("deleted elem has id: " + id)]}>
         <svg viewBox="0 0 512 512" className="display-panel__svg" xmlns="http://www.w3.org/2000/svg">
@@ -80,12 +87,19 @@ const CheckButton = ({doneAction = f => f, id = ""}) =>
         </svg>
     </button>
 
-CheckButton.propTypes = {
-    doneAction: PropTypes.func,
-    id: PropTypes.string
+CheckButton.propTypes =
+    {
+        doneAction: PropTypes.func,
+        id
+:
+PropTypes.string
 }
 
-const CrossButton = ({crossAction = f => f, id = ""}) =>
+const CrossButton = (
+    {
+        crossAction = f => f, id = ""
+    }
+) =>
     <button className="display-panel__button" onClick={() => crossAction(id)}>
         <svg viewBox="0 0 512 512" className="display-panel__svg" xmlns="http://www.w3.org/2000/svg">
             <path className="display-panel__path"
@@ -97,7 +111,10 @@ const CrossButton = ({crossAction = f => f, id = ""}) =>
         </svg>
     </button>
 
-CrossButton.propTypes = {
-    crossAction: PropTypes.func,
-    id: PropTypes.string
+CrossButton.propTypes =
+    {
+        crossAction: PropTypes.func,
+        id
+:
+PropTypes.string
 }
