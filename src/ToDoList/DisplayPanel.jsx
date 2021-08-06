@@ -21,7 +21,7 @@ const ListOfTasks = ({data = [], emptyRender = <p>Nothing</p>}) => {
     return !data.length ? (emptyRender) : (
         <>
             {data.map((task, i) => (
-                <Task  {...task} key={i} orderNumber={i + 1}/>
+                <Task  {...task} key={task.id} orderNumber={i + 1}/>
             ))}
         </>
     )
