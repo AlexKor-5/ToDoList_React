@@ -40,9 +40,26 @@ export const TasksProvider = ({children}) => {
     const doneTask = (id) =>
         setTasks(tasks.filter(item => item.id !== id));
 
+    const addEditedTextContent = (id, textContent) =>
+        setTasks(
+            tasks.map((item) => {
+                if (item.id === id) {
+                    return {
+                        id: id,
+                        text: textContent
+                    }
+                } else {
+                    return {
+                        id: item.id,
+                        text: item.text
+                    }
+                }
+            })
+        );
+
 
     return (
-        <TaskContext.Provider value={{tasks, addTask, resetTasks, sortTasks, doneTask}}>
+        <TaskContext.Provider value={{tasks, addTask, resetTasks, sortTasks, doneTask, addEditedTextContent}}>
             {children}
         </TaskContext.Provider>
     );

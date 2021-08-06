@@ -1,18 +1,25 @@
-import React, {useEffect, useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {useTasks} from "./TasksProvider";
 import PropTypes from "prop-types";
 
 export const Task = ({text = "", orderNumber = 0, id = ""}) => {
     const {doneTask} = useTasks();
+    const refTextArea = useRef(null);
+    const [textareaRead, setTextareaRead] = useState(true);
 
     return (
         <div className="task">
             <div className="display-panel__wrapper">
                 <TaskNumber number={orderNumber}/>
-                <TaskText txt={text}/>
+                <TaskText txt={text}
+                          refTextArea={refTextArea}
+                          textareaRead={textareaRead}
+                          setTextareaRead={setTextareaRead}
+                          id={id}
+                />
             </div>
             <div className="display-panel__buttons">
-                <EditButton/>
+                <EditButton refTextArea={refTextArea} setTextareaRead={setTextareaRead}/>
                 <CheckButton doneAction={doneTask} id={id}/>
                 <CrossButton crossAction={doneTask} id={id}/>
             </div>
@@ -42,28 +49,62 @@ const fixTextareaSize = textarea => {
 }
 
 const TaskText = (props) => {
-    const refTextArea = useRef(null);
-    const {tasks} = useTasks();
+    const {tasks, addEditedTextContent} = useTasks();
+
+    const blurAction = () => {
+        if (!props.refTextArea.current) return
+        props.refTextArea.current.blur();
+        props.setTextareaRead(true);
+    }
+
+    const inputAction = (e) => {
+        const textContent = e.target.value;
+        addEditedTextContent(props.id, textContent);
+    }
 
     useEffect(() => {
-        fixTextareaSize(refTextArea.current);
-    }, [tasks]);
+        fixTextareaSize(props.refTextArea.current);
+    }, [tasks, props.refTextArea]);
+
 
     return (
         <div className="display-panel__text">
-            <textarea ref={refTextArea} defaultValue={props.txt}/>
+           <textarea ref={props.refTextArea} defaultValue={props.txt}
+                     onInput={(e) => {
+                         fixTextareaSize(props.refTextArea.current);
+                         inputAction(e);
+                     }}
+                     readOnly={props.textareaRead}
+                     onBlur={blurAction}
+           />
         </div>
     )
 }
 
+TaskText.defaultProps = {
+    txt: "",
+    refTextArea: null,
+    textareaRead: true,
+    setTextareaRead: (f) => f,
+    id: ""
+};
 
 TaskText.propTypes = {
-    txt: PropTypes.string
-}
+    txt: PropTypes.string,
+    refTextArea: PropTypes.object,
+    textareaRead: PropTypes.bool,
+    setTextareaRead: PropTypes.func,
+    id: PropTypes.string
+};
 
-const EditButton = () => {
+const EditButton = ({refTextArea = {}, setTextareaRead = f => f}) => {
+    const EditButtonAct = () => {
+        if (!refTextArea.current) return
+        setTextareaRead(false);
+        refTextArea.current.focus();
+    }
     return (
-        <button className="display-panel__button">
+        <button className="display-panel__button" onClick={EditButtonAct}>
             <svg xmlns="http://www.w3.org/2000/svg" className="display-panel__svg"
                  viewBox="0 0 512.001 512.001">
                 <path className="display-panel__path"
@@ -71,6 +112,10 @@ const EditButton = () => {
             </svg>
         </button>
     );
+}
+EditButton.propTypes = {
+    refTextArea: PropTypes.object,
+    setTextareaRead: PropTypes.func
 }
 
 const CheckButton = ({doneAction = f => f, id = ""}) =>
