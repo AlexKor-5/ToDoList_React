@@ -43,9 +43,9 @@ TaskNumber.propTypes = {
 }
 
 const fixTextareaSize = textarea => {
-    if (textarea === null) return
-    textarea.style.height = 'auto'
-    textarea.style.height = textarea.scrollHeight + 2 + "px"
+    if (textarea === null) return;
+    textarea.style.height = 'auto';
+    textarea.style.height = textarea.scrollHeight + 2 + "px";
 }
 
 const TaskText = (props) => {
@@ -63,6 +63,7 @@ const TaskText = (props) => {
     }
 
     useEffect(() => {
+        console.log("fix textarea size");
         fixTextareaSize(props.refTextArea.current);
     }, [tasks, props.refTextArea]);
 
